@@ -1,0 +1,96 @@
+{
+    "properties": {
+      "displayName": "Require a tag on resource groups",
+      "policyType": "BuiltIn",
+      "mode": "All",
+      "description": "Enforces existence of a tag on resource groups.",
+      "metadata": {
+        "version": "1.0.0",
+        "category": "Tags"
+      },
+      "parameters": {
+        "application": {
+          "type": "String",
+          "metadata": {
+            "displayName": "application",
+            "description": "Name of the tag, such as 'application'"
+           }
+          },
+          "applicationowner": {
+            "type": "String",
+            "metadata": {
+              "displayName": "application owner",
+              "description": "Name of the tag, such as 'application owner'"
+            }
+          },
+          "department": {
+            "type": "String",
+            "metadata": {
+              "displayName": "department",
+              "description": "Name of the tag, such as 'department'"
+            }
+          },
+          "function": {
+            "type": "String",
+            "metadata": {
+              "displayName": "function",
+              "description": "Name of the tag, such as 'function'"
+            }
+          },
+          "region": {
+            "type": "String",
+            "metadata": {
+              "displayName": "region",
+              "description": "Name of the tag, such as 'region'"
+            }
+          },
+          "environment": {
+            "type": "String",
+            "metadata": {
+              "displayName": "environment",
+              "description": "Name of the tag, such as 'environment'"
+            }
+          } 
+       },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "type",
+              "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+            },
+            {
+              "field": "[concat('tags[', parameters('application'), ']')]",
+              "exists": "false"
+            },
+            {
+                "field": "[concat('tags[', parameters('applicationowner'), ']')]",
+                "exists": "false"
+            },
+            {
+                "field": "[concat('tags[', parameters('department'), ']')]",
+                "exists": "false"
+            },
+            {
+                "field": "[concat('tags[', parameters('function'), ']')]",
+                "exists": "false"
+            },
+            {
+                "field": "[concat('tags[', parameters('region'), ']')]",
+                "exists": "false"
+            },
+            {
+                "field": "[concat('tags[', parameters('environment'), ']')]",
+                "exists": "false"
+            }
+          ]
+        },
+        "then": {
+          "effect": "deny"
+        }
+      }
+    },
+    "id": "/providers/Microsoft.Authorization/policyDefinitions/96670d01-0a4d-4649-9c89-2d3abc0a5025",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "name": "96670d01-0a4d-4649-9c89-2d3abc0a5025"
+  }
