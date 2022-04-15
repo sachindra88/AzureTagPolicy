@@ -1,0 +1,154 @@
+{
+  "properties": {
+    "displayName": "Inherit a tag from the resource group if missing",
+    "policyType": "BuiltIn",
+    "mode": "Indexed",
+    "description": "Adds the specified tag with its value from the parent resource group when any resource missing this tag is created or updated. Existing resources can be remediated by triggering a remediation task. If the tag exists with a different value it will not be changed.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Tags"
+    },
+    "parameters": {
+      "Function": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Function",
+          "description": "Name of the tag, such as 'environment'"
+        }
+      },
+      "applicationowner": {
+        "type": "String",
+        "metadata": {
+          "displayName": "application owner",
+          "description": "Name of the tag, such as 'environment'"
+        }
+      },
+      "Department": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Department",
+          "description": "Name of the tag, such as 'environment'"
+        }
+      },
+      "Region": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Region",
+          "description": "Name of the tag, such as 'environment'"
+        }
+      },
+       "Environment": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Environment",
+          "description": "Name of the tag, such as 'environment'"
+        }
+      },
+      "Application": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Application",
+          "description": "Name of the tag, such as 'environment'"
+        }
+      } 
+    },
+    
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "[concat('tags[', parameters('Function'), ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('applicationowner'), ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('Department'), ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('Region'), ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('Environment'), ']')]",
+            "exists": "false"
+          },
+          {
+            "field": "[concat('tags[', parameters('Application'), ']')]",
+            "exists": "false"
+          },
+          {
+            "value": "[resourceGroup().tags[parameters('Function')]]",
+            "notEquals": ""
+          },
+          {
+            "value": "[resourceGroup().tags[parameters('applicationowner')]]",
+            "notEquals": ""
+          },
+          {
+            "value": "[resourceGroup().tags[parameters('Department')]]",
+            "notEquals": ""
+          },
+          {
+            "value": "[resourceGroup().tags[parameters('Region')]]",
+            "notEquals": ""
+          },
+          {
+            "value": "[resourceGroup().tags[parameters('Environment')]]",
+            "notEquals": ""
+          },
+          {
+            "value": "[resourceGroup().tags[parameters('Application')]]",
+            "notEquals": ""
+          }
+        ]
+      },
+      "then": {
+        "effect": "modify",
+        "details": {
+          "roleDefinitionIds": [
+            "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+          ],
+          "operations": [
+            {
+              "operation": "add",
+              "field": "[concat('tags[', parameters('Function'), ']')]",
+              "value": "[resourceGroup().tags[parameters('Function')]]"
+            },
+            {
+                "operation": "add",
+                "field": "[concat('tags[', parameters('applicationowner'), ']')]",
+                "value": "[resourceGroup().tags[parameters('applicationowner')]]"
+              },
+              {
+                "operation": "add",
+                "field": "[concat('tags[', parameters('Department'), ']')]",
+                "value": "[resourceGroup().tags[parameters('Department')]]"
+              },
+              {
+                "operation": "add",
+                "field": "[concat('tags[', parameters('Region'), ']')]",
+                "value": "[resourceGroup().tags[parameters('Region')]]"
+              },
+              {
+                "operation": "add",
+                "field": "[concat('tags[', parameters('Environment'), ']')]",
+                "value": "[resourceGroup().tags[parameters('Environment')]]"
+              },
+              {
+                "operation": "add",
+                "field": "[concat('tags[', parameters('Application'), ']')]",
+                "value": "[resourceGroup().tags[parameters('Application')]]"
+              }
+          ]
+        }
+      }
+    }
+  },
+  "id": "/providers/Microsoft.Authorization/policyDefinitions/ea3f2387-9b95-492a-a190-fcdc54f7b070",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "ea3f2387-9b95-492a-a190-fcdc54f7b070"
+}
